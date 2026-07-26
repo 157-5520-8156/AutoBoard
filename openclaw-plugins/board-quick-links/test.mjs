@@ -1,11 +1,33 @@
 import assert from "node:assert/strict";
-import {
+import fs from "node:fs/promises";
+import os from "node:os";
+import path from "node:path";
+
+const testStateDirectory = await fs.mkdtemp(
+  path.join(os.tmpdir(), "autoboard-quick-links-"),
+);
+const testConfigPath = path.join(testStateDirectory, "openclaw.json");
+await fs.writeFile(
+  testConfigPath,
+  JSON.stringify({
+    channels: {
+      feishu: {
+        appId: "cli_synthetic_test",
+        appSecret: "synthetic-test-secret",
+      },
+    },
+  }),
+);
+process.env.OPENCLAW_STATE_DIR = testStateDirectory;
+process.env.OPENCLAW_CONFIG_PATH = testConfigPath;
+
+const {
   buildCards,
   createAgentEndHandler,
   createBeforeToolCallHandler,
   resolveRecipient,
   resolveSessionRecipient,
-} from "./runtime.js";
+} = await import("./runtime.js");
 
 const calls = [];
 const logs = [];
@@ -221,3 +243,5 @@ console.log(
     aiCannotSelfConfirm: true,
   }),
 );
+
+await fs.rm(testStateDirectory, { recursive: true, force: true });
