@@ -1,0 +1,17 @@
+dist/
+outputs/
+node_modules/
+.DS_Store
+*.log
+*.tmp
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+.env
+.env.*
+!*.env.example
+deploy/autoboard.env.local
+openclaw.json
+credentials/
+state/
+backups/

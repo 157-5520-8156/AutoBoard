@@ -1,0 +1,16 @@
+{
+  "name": "autoboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Feishu task, journal, and financial-control automation for OpenClaw",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test test/financial-rules.test.mjs openclaw-plugins/board-quick-links/test.mjs",
+    "check": "node --check scripts/financial-control.mjs && node --check scripts/task-journal.mjs && node --check scripts/migrate-minister-board.mjs && node --check scripts/manage-board-owners.mjs && node --check openclaw-plugins/board-quick-links/runtime.js && node --check deploy/patch-feishu-events.mjs",
+    "build": "node scripts/build-deploy-bundle.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}

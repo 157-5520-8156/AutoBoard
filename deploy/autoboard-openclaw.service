@@ -1,0 +1,27 @@
+[Unit]
+Description=AutoBoard OpenClaw Gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=autoboard
+Group=autoboard
+WorkingDirectory=/opt/autoboard
+Environment=HOME=/var/lib/autoboard
+Environment=OPENCLAW_HOME=/var/lib/autoboard
+Environment=OPENCLAW_STATE_DIR=/var/lib/autoboard/.openclaw
+Environment=OPENCLAW_CONFIG_PATH=/var/lib/autoboard/.openclaw/openclaw.json
+EnvironmentFile=-/etc/autoboard/autoboard.env
+ExecStart=/usr/local/bin/openclaw gateway run
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+ReadWritePaths=/var/lib/autoboard /var/backups/autoboard
+
+[Install]
+WantedBy=multi-user.target
